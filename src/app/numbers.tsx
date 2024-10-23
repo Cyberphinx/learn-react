@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function NumbersComponent() {
   const [number, setNumber] = useState(0);
+  const [suffix, setSuffix] = useState("Suffix");
   const [numbers, setNumbers] = useState<number[]>([]);
   console.log("Component re-render");
 
@@ -13,6 +14,9 @@ export default function NumbersComponent() {
   function handleDecrement() {
     setNumber((prev) => prev - 1);
   }
+  function handleSuffix() {
+    setSuffix((prev) => prev + "!");
+  }
 
   function multiples(): number[] {
     return [number + 3, number + 6, number + 9];
@@ -20,11 +24,12 @@ export default function NumbersComponent() {
 
   useEffect(() => {
     setNumbers(multiples());
+    // console.log("Change number");
   }, [number]);
 
   return (
     <>
-      <p>{number}</p>
+      <p>{number} - {suffix}</p>
       <p>{numbers.join(", ")}</p>
       <button onClick={handleIncrement}>
         Increment
@@ -32,6 +37,7 @@ export default function NumbersComponent() {
       <button onClick={handleDecrement}>
         Decrement
       </button>
+      <button onClick={handleSuffix}>Change Suffix</button>
     </>
   );
 }
